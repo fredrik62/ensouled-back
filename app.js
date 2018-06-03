@@ -4,39 +4,22 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
 
-require('dotenv').config();
-const auth = require('./routes/auth');
+
+//require('dotenv').config();
+const geAPI = require('./routes/price');
 
 const app = express();
 
-// db
-mongoose.Promise = Promise;
-mongoose.connect(process.env.MONGODB_URI, {
-  keepAlive: true,
-  reconnectTries: Number.MAX_VALUE
-});
 
-// middlewares
+
+// //middlewares
 app.use(cors({
   credentials: true,
-  origin: [process.env.CLIENT_URL]
-}));
+  origin: ['http://localhost:4200']
+}))
 
-app.use(session({
-  store: new MongoStore({
-    mongooseConnection: mongoose.connection,
-    ttl: 24 * 60 * 60 // 1 day
-  }),
-  secret: 'some-string',
-  resave: true,
-  saveUninitialized: true,
-  cookie: {
-    maxAge: 24 * 60 * 60 * 1000
-  }
-}));
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -44,7 +27,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 
-app.use('/auth', auth);
+app.use('/', geAPI);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
