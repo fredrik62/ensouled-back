@@ -9,6 +9,7 @@ const logger = require('morgan');
 //require('dotenv').config();
 const geAPI = require('./routes/price');
 const getItemId = require('./routes/item');
+const getItemImage = require('./routes/itemImage');
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use(cookieParser());
 
 app.use('/', geAPI);
 app.use('/item', getItemId);
+// app.use('/img', getItemImage);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

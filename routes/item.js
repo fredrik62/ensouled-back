@@ -19,20 +19,20 @@ const getItemGraph = () => {
 router.get('/:id', (req, res) => {
   linkId = req.params.id;
   axios.all([getItem(), getItemGraph()])
-      .then(axios.spread((item, price) => {
-              const itemData = item.data;
-              const graphData = price.data;
+  .then(axios.spread((item, price) => {
+    const itemData = item.data;
+    const graphData = price.data;
 
-              const data = {
-                  itemData: itemData,
-                  graphData: graphData
-              }
-              res.status(200).json(data);
-             
-          }))
-             .catch((error) => {
-                 res.json(error);
-             })
+    const data = {
+        itemData: itemData,
+        graphData: graphData
+    }
+    res.status(200).json(data);
+    
+}))
+    .catch((error) => {
+        res.json(error);
+    })
 
 });
 
