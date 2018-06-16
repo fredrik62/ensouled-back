@@ -3,7 +3,7 @@ const axios = require('axios');
 const router = express.Router();
 
 const geAPI = "https://rsbuddy.com/exchange/summary.json";
-let enumerableKeys = [];
+
 
 
 router.get('/', (req, res) => {

@@ -9,7 +9,7 @@ const logger = require('morgan');
 //require('dotenv').config();
 const geAPI = require('./routes/price');
 const getItemId = require('./routes/item');
-const getItemImage = require('./routes/itemImage');
+const getPlayerUsername = require('./routes/playerUsername');
 
 const app = express();
 
@@ -21,8 +21,6 @@ app.use(cors({
   origin: ['http://localhost:4200']
 }))
 
-
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -31,7 +29,7 @@ app.use(cookieParser());
 
 app.use('/', geAPI);
 app.use('/item', getItemId);
-// app.use('/img', getItemImage);
+app.use('/add', getPlayerUsername);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
