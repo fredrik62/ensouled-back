@@ -13,6 +13,15 @@ const getPlayerUsername = require('./routes/playerUsername');
 
 const app = express();
 
+//connection to db
+mongoose.Promise = Promise;
+mongoose
+  .connect('mongodb://localhost/player')
+  .then(() => {
+    console.log('Connected to Mongo!')
+  }).catch(err => {
+    console.error('Error connecting to mongo', err)
+  });
 
 
 // //middlewares

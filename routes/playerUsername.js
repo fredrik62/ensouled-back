@@ -1,44 +1,68 @@
 const express = require('express');
-const axios = require('axios');
 const router = express.Router();
+const osrs = require("osrs-wrapper");
+//db collection
+const Player = require('../models/player');
 
-const highScore = "http://services.runescape.com/m=hiscore_oldschool/index_lite.ws?player=";
-var response = [];
+
+function PlayerSkill(playerData) {
+this.playerData = playerData;
+console.log(this.playerData);
+const data = {
+    overAllRank: 15
+}
+this.returnPlayerDetails = function() {
+        return data;
+        
+}}
 
 
 router.post('/user', (req, res) => {
 const playerUserName = req.body.rsn;
 
 if (playerUserName.length === 0 || playerUserName.length > 12) {
-  console.log("error"); //send error to front end
+console.log("error"); //send error to front end
 } else {
-  console.log("all good");
-  axios.get(highScore + playerUserName)
-      .then((response) => {
+console.log("all good");
+osrs.hiscores.getPlayer(playerUserName)
+.then(player => {
+PlayerSkill(player);
+
+}) 
   
-  //converting from cvs to obj
-  const cvsData = response.data.split('\n');
-  
-  var jsonObj = [];
-  const headers = cvsData[0].split(',');
-  for (let i = 1; i < cvsData.length; i++) {
-    const data = cvsData[i].split(',');
-    const obj = {};
-    for (let j = 0; j < data.length; j++) {
-      obj[headers[j].trim()] = data[j].trim();
-    }
-    jsonObj.push(obj);
-  }
-  console.log(JSON.stringify(jsonObj));
-  
-  })
-  .catch((error) => {
-  res.json(error);
-  })
-  
-  
+const me = new PlayerSkill();
+const account = me.returnPlayerDetails();
+
+const newPlayer = Player({
+username: playerUserName,
+overAllRank: account.overAllRank
+})
+      
+newPlayer.save()
+.then(player => {
+console.log(player + " saved to database");
+})
+
+.catch((error) => {
+res.json(error);
+})
 }});
 
 
 
+
+//deleted }
+//  .catch(err => {
+//  res.status(400).send("unable to save to database");
+//  })
+// var playerData = (JSON.stringify(player, null, 2));
+
 module.exports = router;
+
+
+//todo
+
+//check if username already exists
+//fix timing issue
+//store all data properly
+//fix error codes
