@@ -1,15 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const osrs = require("osrs-wrapper");
+const axios = require('axios');
 //db collection
 const Player = require('../models/player');
 
 
 function PlayerSkill(playerData) {
 this.playerData = playerData;
-console.log(this.playerData);
+console.log(playerData);
 const data = {
-    overAllRank: 15
+    overAllRank: this.playerData.Skills.Overall.rank
 }
 this.returnPlayerDetails = function() {
         return data;
@@ -29,23 +30,26 @@ osrs.hiscores.getPlayer(playerUserName)
 PlayerSkill(player);
 
 }) 
-  
 const me = new PlayerSkill();
-const account = me.returnPlayerDetails();
+const account = me.returnPlayerDetails()
 
 const newPlayer = Player({
 username: playerUserName,
 overAllRank: account.overAllRank
 })
-      
+
+
+    
 newPlayer.save()
 .then(player => {
 console.log(player + " saved to database");
 })
 
+
 .catch((error) => {
 res.json(error);
 })
+
 }});
 
 

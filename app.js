@@ -10,6 +10,7 @@ const logger = require('morgan');
 const geAPI = require('./routes/price');
 const getItemId = require('./routes/item');
 const getPlayerUsername = require('./routes/playerUsername');
+const playerLookUp = require('./routes/playerLookUp')
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.use(cookieParser());
 app.use('/', geAPI);
 app.use('/item', getItemId);
 app.use('/add', getPlayerUsername);
+app.use('/lookup', playerLookUp);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
