@@ -11,7 +11,7 @@ const geAPI = require('./routes/price');
 const getItemId = require('./routes/item');
 const getPlayerUsername = require('./routes/playerUsername');
 const playerLookUp = require('./routes/playerLookUp')
-
+const displayPlayer = require('./routes/displayPlayers')
 const app = express();
 
 //connection to db
@@ -41,6 +41,7 @@ app.use('/', geAPI);
 app.use('/item', getItemId);
 app.use('/add', getPlayerUsername);
 app.use('/lookup', playerLookUp);
+app.use('/display', displayPlayer);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

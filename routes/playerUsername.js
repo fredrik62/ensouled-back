@@ -5,52 +5,66 @@ const axios = require('axios');
 //db collection
 const Player = require('../models/player');
 
-
-function PlayerSkill(playerData) {
-this.playerData = playerData;
-console.log(playerData);
-const data = {
-    overAllRank: this.playerData.Skills.Overall.rank
-}
-this.returnPlayerDetails = function() {
-        return data;
-        
-}}
-
+function PlayerSkill() {
+    this.set = function(playerData) {
+      // set 'data' to whatever is passed into the function
+      this.data = {
+        overallRank: playerData.Skills.Overall.rank,
+        totalLevel: playerData.Skills.Overall.level,
+        totalExperience:  playerData.Skills.Overall.xp
+      };
+      console.log(this.data);
+    };
+    this.returnPlayerDetails = function() {
+      // return the data
+      return this.data;
+    };
+  }
 
 router.post('/user', (req, res) => {
-const playerUserName = req.body.rsn;
+    const playerUserName = req.body.rsn;
 
-if (playerUserName.length === 0 || playerUserName.length > 12) {
-console.log("error"); //send error to front end
-} else {
-console.log("all good");
-osrs.hiscores.getPlayer(playerUserName)
-.then(player => {
-PlayerSkill(player);
+    User.findOne({playerUserName}, 'username')
+    .then((userExists) => {
+      if (userExists) {
+        return res.status(422).json({code: 'username-not-unique'});
+    //   }
+    if (playerUserName.length === 0 || playerUserName.length > 12) {
+        console.log("error"); //fix and send error to front end
+    } else {
+        console.log("all good");
+        let player = osrs.hiscores.getPlayer(playerUserName)
+            .then(player => {
+                PlayerSkill(player);
 
-}) 
-const me = new PlayerSkill();
-const account = me.returnPlayerDetails()
-
-const newPlayer = Player({
-username: playerUserName,
-overAllRank: account.overAllRank
-})
-
-
-    
-newPlayer.save()
-.then(player => {
-console.log(player + " saved to database");
-})
+                const me = new PlayerSkill();
+                me.set(player);
+                const account = me.returnPlayerDetails();
 
 
-.catch((error) => {
-res.json(error);
-})
+                var newPlayer = Player({
+                    username: playerUserName,
+                    overAllRank: account.overallRank,
+                    totalLevel: account.totalLevel,
+                    totalExperience: account.totalExperience,
+                })
+                newPlayer.save()
+                    .then(player => {
+                        console.log(player + " saved to database");
+                    })
+                
+                    .catch((error) => {
+                        res.json(error);
+                    })
+            })
 
-}});
+
+        
+
+
+
+    }
+});
 
 
 
@@ -67,6 +81,6 @@ module.exports = router;
 //todo
 
 //check if username already exists
-//fix timing issue
+//fix timing issue  ----> FIXED
 //store all data properly
 //fix error codes
