@@ -9,11 +9,151 @@ function PlayerSkill() {
     this.set = function(playerData) {
       // set 'data' to whatever is passed into the function
       this.data = {
-        overallRank: playerData.Skills.Overall.rank,
-        totalLevel: playerData.Skills.Overall.level,
-        totalExperience:  playerData.Skills.Overall.xp
-      };
-      console.log(this.data);
+         
+
+              overallRank: playerData.Skills.Overall.rank,
+              totalLevel: playerData.Skills.Overall.level,
+              totalExperience:  playerData.Skills.Overall.xp,
+         
+
+        "Attack": {
+            rank: playerData.Skills.Attack.rank,
+            xp: playerData.Skills.Attack.xp,
+            level: playerData.Skills.Attack.level
+        },
+
+        "Defence": {
+            rank: playerData.Skills.Defence.rank,
+            xp: playerData.Skills.Defence.xp,
+            level: playerData.Skills.Defence.level
+        },
+
+        "Strength": {
+            rank: playerData.Skills.Strength.rank,
+            xp: playerData.Skills.Strength.xp,
+            level: playerData.Skills.Strength.level
+        },
+
+        "Hitpoints": {
+            rank: playerData.Skills.Hitpoints.rank,
+            xp: playerData.Skills.Hitpoints.xp,
+            level: playerData.Skills.Hitpoints.level
+        },
+
+        "Ranged": {
+            rank: playerData.Skills.Ranged.rank,
+            xp: playerData.Skills.Ranged.xp,
+            level: playerData.Skills.Ranged.level
+        },
+
+        "Prayer": {
+            rank: playerData.Skills.Prayer.rank,
+            xp: playerData.Skills.Prayer.xp,
+            level: playerData.Skills.Prayer.level
+        },
+
+        "Magic": {
+            rank: playerData.Skills.Magic.rank,
+            xp: playerData.Skills.Magic.xp,
+            level: playerData.Skills.Magic.level
+        },
+
+        "Cooking": {
+            rank: playerData.Skills.Cooking.rank,
+            xp: playerData.Skills.Cooking.xp,
+            level: playerData.Skills.Cooking.level
+        },
+
+        "Woodcutting": {
+            rank: playerData.Skills.Woodcutting.rank,
+            xp: playerData.Skills.Woodcutting.xp,
+            level: playerData.Skills.Woodcutting.level
+        },
+
+        "Fletching": {
+            rank: playerData.Skills.Fletching.rank,
+            xp: playerData.Skills.Fletching.xp,
+            level: playerData.Skills.Fletching.level
+        },
+
+        "Fishing": {
+            rank: playerData.Skills.Fishing.rank,
+            xp: playerData.Skills.Fishing.xp,
+            level: playerData.Skills.Fishing.level
+        },
+
+        "Firemaking": {
+            rank: playerData.Skills.Firemaking.rank,
+            xp: playerData.Skills.Firemaking.xp,
+            level: playerData.Skills.Firemaking.level
+        },
+
+        "Crafting": {
+            rank: playerData.Skills.Crafting.rank,
+            xp: playerData.Skills.Crafting.xp,
+            level: playerData.Skills.Crafting.level
+        },
+
+        "Smithing": {
+            rank: playerData.Skills.Smithing.rank,
+            xp: playerData.Skills.Smithing.xp,
+            level: playerData.Skills.Smithing.level
+        },
+
+        "Mining": {
+            rank: playerData.Skills.Mining.rank,
+            xp: playerData.Skills.Mining.xp,
+            level: playerData.Skills.Mining.level
+        },
+
+        "Herblore": {
+            rank: playerData.Skills.Herblore.rank,
+            xp: playerData.Skills.Herblore.xp,
+            level: playerData.Skills.Herblore.level
+        },
+
+        "Agility": {
+            rank: playerData.Skills.Agility.rank,
+            xp: playerData.Skills.Agility.xp,
+            level: playerData.Skills.Agility.level
+        },
+
+        "Thieving": {
+            rank: playerData.Skills.Thieving.rank,
+            xp: playerData.Skills.Thieving.xp,
+            level: playerData.Skills.Thieving.level
+        },
+
+        "Slayer": {
+            rank: playerData.Skills.Slayer.rank,
+            xp: playerData.Skills.Slayer.xp,
+            level: playerData.Skills.Slayer.level
+        },
+
+        "Farming": {
+            rank: playerData.Skills.Farming.rank,
+            xp: playerData.Skills.Farming.xp,
+            level: playerData.Skills.Farming.level
+        },
+
+        "Runecrafting": {
+            rank: playerData.Skills.Runecrafting.rank,
+            xp: playerData.Skills.Runecrafting.xp,
+            level: playerData.Skills.Runecrafting.level
+        },
+
+        "Hunter": {
+            rank: playerData.Skills.Hunter.rank,
+            xp: playerData.Skills.Hunter.xp,
+            level: playerData.Skills.Hunter.level
+        },
+
+        "Construction": {
+            rank: playerData.Skills.Construction.rank,
+            xp: playerData.Skills.Construction.xp,
+            level: playerData.Skills.Construction.level
+        }};
+      
     };
     this.returnPlayerDetails = function() {
       // return the data
@@ -24,11 +164,11 @@ function PlayerSkill() {
 router.post('/user', (req, res) => {
     const playerUserName = req.body.rsn;
 
-    User.findOne({playerUserName}, 'username')
+    Player.findOne({playerUserName}, 'username')
     .then((userExists) => {
       if (userExists) {
         return res.status(422).json({code: 'username-not-unique'});
-    //   }
+       }})
     if (playerUserName.length === 0 || playerUserName.length > 12) {
         console.log("error"); //fix and send error to front end
     } else {
@@ -47,6 +187,29 @@ router.post('/user', (req, res) => {
                     overAllRank: account.overallRank,
                     totalLevel: account.totalLevel,
                     totalExperience: account.totalExperience,
+                    Attack: account.Attack,
+                    Defence: account.Defence,
+                    Strength: account.Strength,
+                    Ranged: account.Ranged,
+                    Magic: account.Magic,
+                    Cooking: account.Cooking,
+                    Woodcutting: account.Woodcutting,
+                    Fletching: account.Fletching,
+                    Fishing: account.Fishing,
+                    Firemaking: account.Firemaking,
+                    Crafting: account.Crafting,
+                    Smithing: account.Smithing,
+                    Mining: account.Mining,
+                    Herblore: account.Herblore,
+                    Agility: account.Agility,
+                    Thieving: account.Thieving,
+                    Slayer: account.Slayer,
+                    Farming: account.Farming,
+                    Runecrafting: account.Runecrafting,
+                    Hunter: account.Hunter,
+                    Construction: account.Construction
+                   
+
                 })
                 newPlayer.save()
                     .then(player => {
@@ -69,12 +232,6 @@ router.post('/user', (req, res) => {
 
 
 
-//deleted }
-//  .catch(err => {
-//  res.status(400).send("unable to save to database");
-//  })
-// var playerData = (JSON.stringify(player, null, 2));
-
 module.exports = router;
 
 
@@ -82,5 +239,5 @@ module.exports = router;
 
 //check if username already exists
 //fix timing issue  ----> FIXED
-//store all data properly
+//store all data properly ----> FIXED
 //fix error codes
