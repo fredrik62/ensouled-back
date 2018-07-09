@@ -5,7 +5,7 @@ const Schema   = mongoose.Schema;
 const playerSchema = new Schema({
 
 
-username: String,
+username:({type: String, unique: true }), 
 overAllRank: Number,
 totalExperience: Number,
 totalLevel: Number,

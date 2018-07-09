@@ -11,9 +11,9 @@ function PlayerSkill() {
       this.data = {
          
 
-              overallRank: playerData.Skills.Overall.rank,
-              totalLevel: playerData.Skills.Overall.level,
-              totalExperience:  playerData.Skills.Overall.xp,
+        overallRank: playerData.Skills.Overall.rank,
+        totalLevel: playerData.Skills.Overall.level,
+        totalExperience:  playerData.Skills.Overall.xp,
          
 
         "Attack": {
@@ -163,15 +163,18 @@ function PlayerSkill() {
 
 router.post('/user', (req, res) => {
     const playerUserName = req.body.rsn;
+    const symbols = /^[a-zA-Z0-9]*$/;
+    const hasSymbol = symbols.test(playerUserName);
 
-    Player.findOne({playerUserName}, 'username')
+    if (hasSymbol === false || playerUserName.length === 0 || playerUserName.length > 12) {
+        return res.status(403).json({code: 'Forbidden, issue with user input'});
+    }
+
+    Player.findOne({'username': playerUserName})
     .then((userExists) => {
       if (userExists) {
         return res.status(422).json({code: 'username-not-unique'});
-       }})
-    if (playerUserName.length === 0 || playerUserName.length > 12) {
-        console.log("error"); //fix and send error to front end
-    } else {
+       } else {
         console.log("all good");
         let player = osrs.hiscores.getPlayer(playerUserName)
             .then(player => {
@@ -220,13 +223,9 @@ router.post('/user', (req, res) => {
                         res.json(error);
                     })
             })
-
-
-        
-
-
-
-    }
+        }
+    
+    })
 });
 
 
@@ -234,10 +233,3 @@ router.post('/user', (req, res) => {
 
 module.exports = router;
 
-
-//todo
-
-//check if username already exists
-//fix timing issue  ----> FIXED
-//store all data properly ----> FIXED
-//fix error codes

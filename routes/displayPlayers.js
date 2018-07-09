@@ -10,6 +10,9 @@ Player.find({}, function (err,users ) {
     res.json("something went really wrong");
     next;
   }
+  for (data in users) {
+    console.log(users[data].username);
+  }
   res.json(users);
 })
    
