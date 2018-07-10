@@ -35,20 +35,18 @@ router.get('/:id', (req, res) => {
                 itemData: itemData,
                 graphData: graphData
             }
-            console.log("ddd" + data);
             res.status(200).json(data);
 
         }
     ))
     .catch((error) => {
         if (error.response) {
-            //console.log(error.response.data);
             if (error.response.status === 404) {
                 return res.status(404).json({code: 'Item not found'});
             }
-            // console.log(error.response.headers);
+            
           }
-        // res.json(error);
+       
     })
 
 });

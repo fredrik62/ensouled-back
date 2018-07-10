@@ -31,18 +31,16 @@ if (hasSymbol === false || playerUserName.length === 0 || playerUserName.length 
           } 
           
         }) 
+        .catch((error) => {
+          if (error) {
+            if (error.statusCode === 404) {
+             return res.status(404).json({code: 'player cannot be found'});
+            }
+           }
+        })
       }
     })
-    .catch((error) => {
-      if (error.response) {
-        //console.log(error.response.data);
-        if (error.response.status === 404) {
-          return res.status(404).json({code: 'Player cannot be found'});
-        }
-        
-      }
-    })
-    }
+  }
     
   
 

@@ -179,7 +179,6 @@ router.post('/user', (req, res) => {
         console.log("all good");
         let player = osrs.hiscores.getPlayer(playerUserName)
       
-            //  return res.status(404).json({code: 'player cannot be found'});
 
 
         .then(player => { 
@@ -226,18 +225,16 @@ router.post('/user', (req, res) => {
                         res.json("ok");
                     })
                 
-                    .catch((error) => {
-                        if (error.response) {
-                            //console.log(error.response.data);
-                            if (error.response.status === 404) {
-                              return res.status(404).json({code: 'Player cannot be found'});
-                            }
-                            
-                          }
-                      
-                    })
-            })
-        }
+                })
+                .catch((error) => {
+                    if (error) {
+                       if (error.statusCode === 404) {
+                        return res.status(404).json({code: 'player cannot be found'});
+                       }
+                      }
+                  
+                })
+            }
     
     })
     });
