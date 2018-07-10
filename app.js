@@ -10,8 +10,10 @@ const logger = require('morgan');
 const geAPI = require('./routes/price');
 const getItemId = require('./routes/item');
 const getPlayerUsername = require('./routes/playerUsername');
-const playerLookUp = require('./routes/playerLookUp')
-const displayPlayer = require('./routes/displayPlayers')
+const playerLookUp = require('./routes/playerLookUp');
+const displayPlayer = require('./routes/displayPlayers');
+const getSkill = require('./routes/getOneSkill');
+
 const app = express();
 
 //connection to db
@@ -42,6 +44,7 @@ app.use('/item', getItemId);
 app.use('/add', getPlayerUsername);
 app.use('/lookup', playerLookUp);
 app.use('/display', displayPlayer);
+app.use('/getskill', getSkill);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

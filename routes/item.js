@@ -18,20 +18,37 @@ const getItemGraph = () => {
 
 router.get('/:id', (req, res) => {
   linkId = req.params.id;
-  axios.all([getItem(), getItemGraph()])
-  .then(axios.spread((item, price) => {
-    const itemData = item.data;
-    const graphData = price.data;
+  const symbols = /^[a-zA-Z0-9_ ]*$/;
+  const hasSymbol = symbols.test(linkId);
 
-    const data = {
-        itemData: itemData,
-        graphData: graphData
-    }
-    res.status(200).json(data);
-    
-}))
+  if (hasSymbol === false || linkId.length > 5) {
+      return res.status(404).json({code: 'Item not found'});
+  }
+   
+    axios.all([getItem(), getItemGraph()])
+        .then(axios.spread((item, price) => {
+            
+            const itemData = item.data;
+            const graphData = price.data;
+
+            const data = {
+                itemData: itemData,
+                graphData: graphData
+            }
+            console.log("ddd" + data);
+            res.status(200).json(data);
+
+        }
+    ))
     .catch((error) => {
-        res.json(error);
+        if (error.response) {
+            //console.log(error.response.data);
+            if (error.response.status === 404) {
+                return res.status(404).json({code: 'Item not found'});
+            }
+            // console.log(error.response.headers);
+          }
+        // res.json(error);
     })
 
 });

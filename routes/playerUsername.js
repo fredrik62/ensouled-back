@@ -8,6 +8,7 @@ const Player = require('../models/player');
 function PlayerSkill() {
     this.set = function(playerData) {
       // set 'data' to whatever is passed into the function
+    
       this.data = {
          
 
@@ -163,7 +164,7 @@ function PlayerSkill() {
 
 router.post('/user', (req, res) => {
     const playerUserName = req.body.rsn;
-    const symbols = /^[a-zA-Z0-9]*$/;
+    const symbols = /^[a-zA-Z0-9_ ]*$/;
     const hasSymbol = symbols.test(playerUserName);
 
     if (hasSymbol === false || playerUserName.length === 0 || playerUserName.length > 12) {
@@ -174,17 +175,22 @@ router.post('/user', (req, res) => {
     .then((userExists) => {
       if (userExists) {
         return res.status(422).json({code: 'username-not-unique'});
-       } else {
+       } else if (!userExists){
         console.log("all good");
         let player = osrs.hiscores.getPlayer(playerUserName)
-            .then(player => {
-                PlayerSkill(player);
+      
+            //  return res.status(404).json({code: 'player cannot be found'});
 
+
+        .then(player => { 
+        
+          PlayerSkill(player);
+      
                 const me = new PlayerSkill();
                 me.set(player);
                 const account = me.returnPlayerDetails();
-
-
+    
+    
                 var newPlayer = Player({
                     username: playerUserName,
                     overAllRank: account.overallRank,
@@ -211,25 +217,37 @@ router.post('/user', (req, res) => {
                     Runecrafting: account.Runecrafting,
                     Hunter: account.Hunter,
                     Construction: account.Construction
-                   
-
+                    
+    
                 })
                 newPlayer.save()
                     .then(player => {
                         console.log(player + " saved to database");
+                        res.json("ok");
                     })
                 
                     .catch((error) => {
-                        res.json(error);
+                        if (error.response) {
+                            //console.log(error.response.data);
+                            if (error.response.status === 404) {
+                              return res.status(404).json({code: 'Player cannot be found'});
+                            }
+                            
+                          }
+                      
                     })
             })
         }
     
     })
-});
+    });
+    
+    
+    
+    
+    module.exports = router;
 
-
-
-
-module.exports = router;
-
+              
+            
+                
+//todo return error to frontend if username does not exist.

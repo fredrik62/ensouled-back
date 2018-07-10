@@ -6,14 +6,14 @@ const Player = require('../models/player');
 
 router.get('/', (req, res) => {
 Player.find({}, function (err,users ) {
-  if (err) {
-    res.json("something went really wrong");
-    next;
-  }
-  for (data in users) {
-    console.log(users[data].username);
-  }
-  res.json(users);
+  res.status(200).json(users);
+ 
+  // for (data in users) {
+  //   console.log(users[data].username);
+  // }
+})
+  .catch((error) => {
+    res.json(error);
 })
    
     
