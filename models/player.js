@@ -9,6 +9,11 @@ username:({type: String, unique: true }),
 overAllRank: Number,
 totalExperience: Number,
 totalLevel: Number,
+updated: { type: Date, default: Date.now },
+mode: {
+  type: String,
+  default: 'Regular'
+},
   
 
  Attack: {

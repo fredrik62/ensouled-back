@@ -3,7 +3,8 @@ const router = express.Router();
 const osrs = require("osrs-wrapper");
 const axios = require('axios');
 //db collection
-const Player = require('../models/player');
+const Player = require('../../models/player');
+
 
 function PlayerSkill() {
     this.set = function(playerData) {
@@ -163,6 +164,8 @@ function PlayerSkill() {
   }
 
 router.post('/user', (req, res) => {
+    
+    const gameMode = req.body.ultimate;
     const playerUserName = req.body.rsn;
     const symbols = /^[a-zA-Z0-9_ ]*$/;
     const hasSymbol = symbols.test(playerUserName);
@@ -177,12 +180,11 @@ router.post('/user', (req, res) => {
         return res.status(422).json({code: 'username-not-unique'});
        } else if (!userExists){
         console.log("all good");
-        let player = osrs.hiscores.getPlayer(playerUserName)
+        let player = osrs.hiscores.getPlayer(playerUserName, gameMode)
       
 
 
         .then(player => { 
-        
           PlayerSkill(player);
       
                 const me = new PlayerSkill();
@@ -195,6 +197,7 @@ router.post('/user', (req, res) => {
                     overAllRank: account.overallRank,
                     totalLevel: account.totalLevel,
                     totalExperience: account.totalExperience,
+                    mode: gameMode,
                     Attack: account.Attack,
                     Defence: account.Defence,
                     Strength: account.Strength,
@@ -246,5 +249,3 @@ router.post('/user', (req, res) => {
 
               
             
-                
-//todo return error to frontend if username does not exist.

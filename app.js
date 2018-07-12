@@ -9,9 +9,18 @@ const logger = require('morgan');
 //require('dotenv').config();
 const geAPI = require('./routes/price');
 const getItemId = require('./routes/item');
-const getPlayerUsername = require('./routes/playerUsername');
+//all different player modes
+const trackRegularPlayer = require('./routes/player-tracking/track-regular-player');
+const trackIronmanPlayer = require('./routes/player-tracking/track-ironman-player');
+const trackHardcoreIronmanPlayer = require('./routes/player-tracking/track-hardcore-ironman-player');
+const trackUltimateIronmanPlayer = require('./routes/player-tracking/track-ultimate-ironman-player');
+//THIS DISPLAYS ALL PLAYERS IN DATABASE
+const displayAllRegularPlayers = require('./routes/display-tracked-players/display-regular-players');
+const displayAllIronmanPlayers = require('./routes/display-tracked-players/display-ironman-players');
+const displayAllHardcoreIronmanPlayers = require('./routes/display-tracked-players/display-hardcore-ironman-players');
+const displayAllUltimateIronmanPlayers = require('./routes/display-tracked-players/display-ultimate-ironman-players');
+
 const playerLookUp = require('./routes/playerLookUp');
-const displayPlayer = require('./routes/displayPlayers');
 const getSkill = require('./routes/getOneSkill');
 
 const app = express();
@@ -38,12 +47,26 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-
+//grandexchange price data
 app.use('/', geAPI);
 app.use('/item', getItemId);
-app.use('/add', getPlayerUsername);
+
+//track different account modes
+app.use('/trackregular', trackRegularPlayer);
+app.use('/trackironman', trackIronmanPlayer);
+app.use('/trackhardcore', trackHardcoreIronmanPlayer);
+app.use('/trackultimate', trackUltimateIronmanPlayer);
+
+//displaying different account modes
+app.use('/display-all-players', displayAllRegularPlayers);
+app.use('/display-all-ironman-players',displayAllIronmanPlayers);
+app.use('/display-all-hardcore-ironman-players',displayAllHardcoreIronmanPlayers);
+app.use('/display-all-ultimate-ironman-players',displayAllUltimateIronmanPlayers);
+
+
+
+//random stat lookups
 app.use('/lookup', playerLookUp);
-app.use('/display', displayPlayer);
 app.use('/getskill', getSkill);
 
 // catch 404 and forward to error handler

@@ -1,11 +1,13 @@
+
+
 const express = require('express');
 const router = express.Router();
 
 //db collection
-const Player = require('../models/player');
+const Player = require('../../models/player');
 
 router.get('/', (req, res) => {
-Player.find({}, function (err,users ) {
+Player.find({mode: 'Regular'}, function (err,users ) {
   res.status(200).json(users);
  
   // for (data in users) {
@@ -15,11 +17,6 @@ Player.find({}, function (err,users ) {
   .catch((error) => {
     res.json(error);
 })
-   
-    
-
-  
-
 });
 
 
