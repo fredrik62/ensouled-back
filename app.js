@@ -4,6 +4,8 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+// cron scheduler
+const cron = require("node-cron");
 
 
 //require('dotenv').config();
@@ -63,7 +65,12 @@ app.use('/display-all-ironman-players',displayAllIronmanPlayers);
 app.use('/display-all-hardcore-ironman-players',displayAllHardcoreIronmanPlayers);
 app.use('/display-all-ultimate-ironman-players',displayAllUltimateIronmanPlayers);
 
-
+//cron jobs
+//data gets all price data for all OSRS ITEMS
+const data = require('./schedule-jobs/grandExchangePriceData');
+cron.schedule("0 0 */2 * * *", function() {
+  data.getMeData();
+});
 
 //random stat lookups
 app.use('/lookup', playerLookUp);
