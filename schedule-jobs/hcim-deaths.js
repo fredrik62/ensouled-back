@@ -4,6 +4,9 @@ const router = express.Router();
 
 const osrs = require("osrs-wrapper");
 
+//hcim mongodb collection
+const HCIM = require('../models/hcimDeathData');
+
 const T = new Twit({
    consumer_key:         'Rt5CUETLaZ35fJIYmMjcHLoTt',
    consumer_secret:      'a26Admz98eomZuQ5JbHQD6iLbuaYwbPBoXUOy10ynydF6HhFjA',
@@ -39,20 +42,30 @@ const options = { screen_name: 'HCIM_Deaths',
               overAllXp: playerData.Skills.Overall.xp,
               totalLevel:playerData.Skills.Overall.level,
             }
-            console.log(hcimDeathData);
-          } 
+            var newHcimDeath = HCIM({
+             data: hcimDeathData
+                     
+           })
+     
+           newHcimDeath.save()
+               .then(hcimDeath => {
+                   console.log(hcimDeath + " saved to database");
+                  
+               })
+           
+               .catch((error) => {
+                 if (error) {
+                   if (error.statusCode === 404) {
+                    return res.status(404).json({code: 'player cannot be found'});
+                   }
+                  }
+               })
+           } 
           
         }) 
-        .catch((error) => {
-          if (error) {
-            if (error.statusCode === 404) {
-             return res.status(404).json({code: 'player cannot be found'});
-            }
-           }
-        })
-
-       
-          
       })
      }
     }
+
+       
+          
