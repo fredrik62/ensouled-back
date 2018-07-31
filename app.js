@@ -7,6 +7,9 @@ const logger = require('morgan');
 // cron scheduler
 const cron = require("node-cron");
 
+//for twitter
+const Twit = require('twit');
+
 
 //require('dotenv').config();
 const geAPI = require('./routes/price');
@@ -70,6 +73,14 @@ app.use('/display-all-ultimate-ironman-players',displayAllUltimateIronmanPlayers
 const data = require('./schedule-jobs/grandExchangePriceData');
 cron.schedule("0 0 */2 * * *", function() {
   data.getMeData();
+});
+
+//get HCIM DEATHS 
+const hcimDeaths = require('./schedule-jobs/hcim-deaths');
+
+cron.schedule('* * * * *', function(){
+  hcimDeaths.getTweets();
+  console.log('running a task every minute');
 });
 
 //random stat lookups
