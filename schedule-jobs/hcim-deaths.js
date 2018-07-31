@@ -31,41 +31,51 @@ const options = { screen_name: 'HCIM_Deaths',
         var hcim = "Hardcore";
         
         osrs.hiscores.getPlayer(playerNameFromTweet, hcim)
-        .then(playerData => {
-          if (playerData !== null) {
+   .then(playerData => {
+     if (playerData !== null) {
 
-            let hcimDeathData = {
-              playerUsername: playerNameFromTweet,
-              twitterPostId: twitterPostId,
-              statsAtDeath: playerStatsDeathMoment,
-              overallRank: playerData.Skills.Overall.rank,
-              overAllXp: playerData.Skills.Overall.xp,
-              totalLevel:playerData.Skills.Overall.level,
-            }
-            var newHcimDeath = HCIM({
-             data: hcimDeathData
-                     
-           })
-     
-           newHcimDeath.save()
+       HCIM.findOne({
+           'twitterPostId': data.twitterPostId
+         })
+         .then((userExists) => {
+           if (userExists) {
+             console.log("user already exists so no need to do this again...");
+           } else if (!userExists) {
+
+             let hcimDeathData = {
+               playerUsername: playerNameFromTweet,
+               twitterPostId: twitterPostId,
+               statsAtDeath: playerStatsDeathMoment,
+               overallRank: playerData.Skills.Overall.rank,
+               overAllXp: playerData.Skills.Overall.xp,
+               totalLevel: playerData.Skills.Overall.level,
+             }
+             var newHcimDeath = HCIM({
+               data: hcimDeathData
+
+             })
+
+             newHcimDeath.save()
                .then(hcimDeath => {
-                   console.log(hcimDeath + " saved to database");
-                  
+                 console.log(hcimDeath + " saved to database");
+
                })
-           
+
                .catch((error) => {
                  if (error) {
                    if (error.statusCode === 404) {
-                    return res.status(404).json({code: 'player cannot be found'});
+                     return res.status(404).json({
+                       code: 'player cannot be found'
+                     });
                    }
-                  }
+                 }
                })
-           } 
-          
-        }) 
-      })
+           } //else statement ends here
+         })
      }
-    }
 
-       
-          
+   })
+
+ })
+ }
+ }
