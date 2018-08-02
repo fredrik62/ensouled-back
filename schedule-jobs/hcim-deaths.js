@@ -33,7 +33,7 @@ const options = { screen_name: 'HCIM_Deaths',
         } else {
           
           var playerNameFromTweet = tweetData.substring(0,  startOfhasDied);
-         
+         console.log(playerNameFromTweet);
           var playerStatsDeathMoment = data[0].entities.media[0].media_url_https;
           var twitterPostId  = data[0].entities.media[0].id;
           var hcim = "Hardcore";
@@ -45,7 +45,7 @@ const options = { screen_name: 'HCIM_Deaths',
          if (playerData !== null) {
 
        HCIM.findOne({
-           'playerUsername': data.playerUsername
+           'playerUsername': playerNameFromTweet
          })
          .then((userExists) => {
            if (userExists) {
