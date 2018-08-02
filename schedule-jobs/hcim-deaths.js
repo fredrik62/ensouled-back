@@ -45,7 +45,7 @@ const options = { screen_name: 'HCIM_Deaths',
          if (playerData !== null) {
 
        HCIM.findOne({
-           'playerUsername': playerNameFromTweet
+           'username': playerNameFromTweet
          })
          .then((userExists) => {
            if (userExists) {
@@ -63,6 +63,7 @@ const options = { screen_name: 'HCIM_Deaths',
               
              }
              var newHcimDeath = HCIM({
+               username: playerNameFromTweet,
                data: hcimDeathData
 
              })

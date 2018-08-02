@@ -29,7 +29,8 @@ const playerLookUp = require('./routes/playerLookUp');
 const getSkill = require('./routes/getOneSkill');
 
 //twitter feed hcim deaths
-const hcimDeathLookUp = require('./routes/display-twitter-feed/tweets');
+const hcimDeathLookUp = require('./routes/display-twitter-feed/three-tweets');
+const hcimDeathSearch = require('./routes/display-twitter-feed/all-tweets');
 
 const app = express();
 
@@ -73,23 +74,24 @@ app.use('/display-all-ultimate-ironman-players',displayAllUltimateIronmanPlayers
 
 
 //display twitter feed in front end
-app.use('/twitter-feed',hcimDeathLookUp);
+app.use('/three-tweets',hcimDeathLookUp); 
+app.use('/all-tweets',hcimDeathSearch);
 
 //cron jobs
 //data gets all price data for all OSRS ITEMS
 const data = require('./schedule-jobs/grandExchangePriceData');
 cron.schedule("0 0 */2 * * *", function() {
   data.getMeData();
-  hcimDeaths.getTweets();
+  // hcimDeaths.getTweets();
 });
 
 //get HCIM DEATHS 
 const hcimDeaths = require('./schedule-jobs/hcim-deaths');
 
-// cron.schedule('*/1 * * * *', function(){
-//   hcimDeaths.getTweets();
-//   console.log('running a task every minute');
-// });
+cron.schedule('*/1 * * * *', function(){
+  hcimDeaths.getTweets();
+  console.log('running a task every minute');
+});
 
 //random stat lookups
 app.use('/lookup', playerLookUp);
