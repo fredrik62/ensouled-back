@@ -23,19 +23,29 @@ const options = { screen_name: 'HCIM_Deaths',
       T.get('statuses/user_timeline', options , function(err, data) {
         var tweetData = data[0].text;
         var startOfhasDied = tweetData.indexOf('has died!');
+        var includes = tweetData.includes('has died!');
+        
 
 
-        var playerNameFromTweet = tweetData.substring(0,  startOfhasDied);
-        var playerStatsDeathMoment = data[0].entities.media[0].media_url_https;
-        var twitterPostId  = data[0].entities.media[0].id;
-        var hcim = "Hardcore";
+        
+        if (!includes) {
+         console.log("shit is no good so you don't want this");
+        } else {
+          
+          var playerNameFromTweet = tweetData.substring(0,  startOfhasDied);
+         
+          var playerStatsDeathMoment = data[0].entities.media[0].media_url_https;
+          var twitterPostId  = data[0].entities.media[0].id;
+          var hcim = "Hardcore";
+          var source = data[0].entities.media[0].url;
+        
         
         osrs.hiscores.getPlayer(playerNameFromTweet, hcim)
-   .then(playerData => {
-     if (playerData !== null) {
+        .then(playerData => {
+         if (playerData !== null) {
 
        HCIM.findOne({
-           'twitterPostId': data.twitterPostId
+           'playerUsername': data.playerUsername
          })
          .then((userExists) => {
            if (userExists) {
@@ -49,6 +59,8 @@ const options = { screen_name: 'HCIM_Deaths',
                overallRank: playerData.Skills.Overall.rank,
                overAllXp: playerData.Skills.Overall.xp,
                totalLevel: playerData.Skills.Overall.level,
+               source: source
+              
              }
              var newHcimDeath = HCIM({
                data: hcimDeathData
@@ -75,6 +87,7 @@ const options = { screen_name: 'HCIM_Deaths',
      }
 
    })
+  } //needs to end here
 
  })
  }
