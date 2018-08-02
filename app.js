@@ -82,14 +82,20 @@ app.use('/all-tweets',hcimDeathSearch);
 const data = require('./schedule-jobs/grandExchangePriceData');
 cron.schedule("0 0 */2 * * *", function() {
   data.getMeData();
-  // hcimDeaths.getTweets();
+  hcimDeaths.getTweets();
 });
 
 //get HCIM DEATHS 
 const hcimDeaths = require('./schedule-jobs/hcim-deaths');
 
+
+//highscore updates begin here
+
+const twentyFourHourUpdate = require('./schedule-jobs/highscore-updates/24-hour');
+
 cron.schedule('*/1 * * * *', function(){
-  hcimDeaths.getTweets();
+  // hcimDeaths.getTweets();
+  twentyFourHourUpdate.setEverythingToZero24Hour();
   console.log('running a task every minute');
 });
 
