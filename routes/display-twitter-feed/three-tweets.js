@@ -8,7 +8,7 @@ const HCIM = require('../../models/hcimDeathData');
 
 router.get('/', (req, res) => {
   HCIM.find({} , function (err,deaths ) {
-  const limit = 1;
+  const limit = 2;
   const hcimDeaths = deaths.length;
   let threeMostRecentDeaths = [];
     for (let i = hcimDeaths - 1; i >= hcimDeaths-limit; i--) {
