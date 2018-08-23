@@ -94,7 +94,7 @@ const hcimDeaths = require('./schedule-jobs/hcim-deaths');
 const twentyFourHourUpdate = require('./schedule-jobs/highscore-updates/24-hour');
 
 cron.schedule('*/1 * * * *', function(){
-  // hcimDeaths.getTweets();
+  hcimDeaths.getTweets();
   twentyFourHourUpdate.setEverythingToZero24Hour();
   console.log('running a task every minute');
 });

@@ -42,6 +42,7 @@ const options = { screen_name: 'HCIM_Deaths',
         
         osrs.hiscores.getPlayer(playerNameFromTweet, hcim)
         .then(playerData => {
+          console.log(playerData);
          if (playerData !== null) {
 
        HCIM.findOne({
