@@ -94,8 +94,8 @@ const hcimDeaths = require('./schedule-jobs/hcim-deaths');
 const playerHighscore = require('./schedule-jobs/highscore-updates/general-player-update');
 
 cron.schedule('*/1 * * * *', function(){
-  // hcimDeaths.getTweets();
-  playerHighscore.updatePlayers();
+  hcimDeaths.getTweets();
+  // playerHighscore.updatePlayers();
   console.log('running a task every minute');
 });
 
