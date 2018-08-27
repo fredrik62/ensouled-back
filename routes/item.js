@@ -6,15 +6,6 @@ const base_URL = 'http://services.runescape.com/m=itemdb_oldschool/api/catalogue
 const graph_URL = 'http://services.runescape.com/m=itemdb_oldschool/api/graph/';
 
 
-// let linkId;
-
-// const getItem = () => {
-//   return axios.get(base_URL + linkId);
-// }
-
-// const getItemGraph = () => {
-//   return axios.get(graph_URL + linkId +".json");
-// }
 
 router.get('/:id', (req, res) => {
   linkId = req.params.id;
