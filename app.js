@@ -81,7 +81,7 @@ app.use('/all-tweets',hcimDeathSearch);
 //data gets all price data for all OSRS ITEMS
 const data = require('./schedule-jobs/grandExchangePriceData');
 cron.schedule("0 0 */2 * * *", function() {
-  data.getMeData();
+  // data.getMeData();
   // hcimDeaths.getTweets();
 });
 
@@ -99,6 +99,13 @@ cron.schedule('*/1 * * * *', function(){
   // playerHighscore.updatePlayers();
   playerXpUpdateCalculation.calculateXpGains();
   console.log('running a task every minute');
+});
+
+cron.schedule('*/3 * * * *', function(){
+  // hcimDeaths.getTweets();
+  playerHighscore.updatePlayers();
+  // playerXpUpdateCalculation.calculateXpGains();
+  console.log('running a task every 3 minutes');
 });
 
 //random stat lookups

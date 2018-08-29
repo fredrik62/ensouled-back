@@ -179,6 +179,7 @@ const updatePlayer = require('../../models/playerUpdate');
           Attack: data.Attack,
           Defence: data.Defence,
           Strength: data.Strength,
+          Hitpoints: data.Hitpoints,
           Ranged: data.Ranged,
           Magic: data.Magic,
           Cooking: data.Cooking,
