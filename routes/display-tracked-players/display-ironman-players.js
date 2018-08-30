@@ -1,21 +1,25 @@
-
-
 const express = require('express');
 const router = express.Router();
 
 //db collection
-const Player = require('../../models/player');
+const XpGain = require('../../models/xpUpdate');
 
 router.get('/', (req, res) => {
-Player.find({mode: 'Ironman'} , function (err,users ) {
-  res.status(200).json(users);
- 
+XpGain.find({mode: 'Ironman'} , function (err,users ) {
+  if (users.length === 0) {
+    console.log("yes");
+  } else {
+    res.status(200).json(users);
+
+  }
+
 })
   .catch((error) => {
     res.json(error);
 })
 });
 
-
-
 module.exports = router;
+
+
+

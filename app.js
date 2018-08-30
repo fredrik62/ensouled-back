@@ -101,7 +101,7 @@ cron.schedule('*/1 * * * *', function(){
   console.log('running a task every minute');
 });
 
-cron.schedule('*/3 * * * *', function(){
+cron.schedule('*/2 * * * *', function(){
   // hcimDeaths.getTweets();
   // playerHighscore.updatePlayers();
   playerXpUpdateCalculation.calculateXpGains();

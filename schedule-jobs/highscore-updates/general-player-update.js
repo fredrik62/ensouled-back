@@ -203,7 +203,7 @@ const updatePlayer = require('../../models/playerUpdate');
       })
       updatedPlayer.save()
           .then(player => {
-              console.log(player + " saved to database");
+            //   console.log(player + " saved to database");
               
           })
           .catch((error) => {

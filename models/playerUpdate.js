@@ -137,4 +137,4 @@ Construction: {
 
 const updatePlayer = mongoose.model("updatePlayer", updateplayerSchema);
 
-module.exports = updatePlayer
+module.exports = updatePlayer;

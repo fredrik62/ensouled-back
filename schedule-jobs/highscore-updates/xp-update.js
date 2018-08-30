@@ -4,6 +4,10 @@ const router = express.Router();
 const PlayerData = require('../../models/playerUpdate');
 const Player = require('../../models/player');
 
+const Xp = require('../../models/xpUpdate');
+
+
+
 module.exports = {
   calculateXpGains: function() {
     Player.find({})
@@ -17,7 +21,9 @@ module.exports = {
           if (data.length === 0) {
            console.log("no data on that player yet");
           } else {
+          
 
+          
             //helpers
             const dFirst = data[0];
             const dLast = data[data.length -1];
@@ -256,12 +262,27 @@ module.exports = {
                 constructionRank: constructionFirstRank - constructionLastRank
                },
   
-              }]
-  
-            }
-            // console.log(playerXpGain.Skills);
-            console.log(playerXpGain);
+              }]};
+           
+
+            const newXp = Xp({
+              username: playerXpGain.username,
+              mode: playerXpGain.mode,
+              totalExperience: playerXpGain.totalExperience,
+              overAllRank: playerXpGain.overAllRank,
+              Skills: playerXpGain.Skills
+             })
+
+            newXp.save()
+              .then(player => {
+                  console.log(player + " saved to database");
+                 
+              })
+              .catch((error) => {
+                console.log(error);
+              })
           }
+          
         })
       }
     })
