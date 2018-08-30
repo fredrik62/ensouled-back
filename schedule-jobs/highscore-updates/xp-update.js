@@ -15,9 +15,10 @@ module.exports = {
       for (let i = 0; i < playerUsername.length; i++) {
         let user = playerUsername[i].username;
 
-        PlayerData.find({ 'username': user})
+        PlayerData.findOneAndUpdate({ 'username': user})
         .then((data) => {
-          
+          console.log(data.doc);
+          //fix, find one user and update
           if (data.length === 0) {
            console.log("no data on that player yet");
           } else {
