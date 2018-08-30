@@ -15,16 +15,16 @@ module.exports = {
       for (let i = 0; i < playerUsername.length; i++) {
         let user = playerUsername[i].username;
 
-        PlayerData.findOneAndUpdate({ 'username': user})
+        PlayerData.find({ 'username': user})
         .then((data) => {
-          console.log(data.doc);
-          //fix, find one user and update
+          
           if (data.length === 0) {
            console.log("no data on that player yet");
           } else {
-          
-
-          
+       Xp.remove({'username': user})
+       .then(() => {
+         console.log("user deleted to avoid filling db with same info")
+      
             //helpers
             const dFirst = data[0];
             const dLast = data[data.length -1];
@@ -282,8 +282,9 @@ module.exports = {
               .catch((error) => {
                 console.log(error);
               })
+            })
           }
-          
+       
         })
       }
     })

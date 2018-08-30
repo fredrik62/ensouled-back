@@ -96,15 +96,15 @@ const playerXpUpdateCalculation = require('./schedule-jobs/highscore-updates/xp-
 
 cron.schedule('*/1 * * * *', function(){
   // hcimDeaths.getTweets();
-  playerHighscore.updatePlayers();
-  // playerXpUpdateCalculation.calculateXpGains();
+  // playerHighscore.updatePlayers();
+  playerXpUpdateCalculation.calculateXpGains();
   console.log('running a task every minute');
 });
 
 cron.schedule('*/2 * * * *', function(){
   // hcimDeaths.getTweets();
   // playerHighscore.updatePlayers();
-  playerXpUpdateCalculation.calculateXpGains();
+  // playerXpUpdateCalculation.calculateXpGains();
   console.log('running a task every 2 minutes');
 });
 
