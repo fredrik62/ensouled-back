@@ -6,12 +6,12 @@ const router = express.Router();
 const osrs = require("osrs-wrapper");
 //get all players from db
 const Player = require('../../models/player');
-const updatePlayer = require('../../models/playerUpdate');
+const storePlayerData = require('../../models/storedPlayerData');
 
 
 
   module.exports = {
-    updatePlayers: function() {
+    storePlayerData: function() {
       Player.find({})
       .then((playerAccount) => {
        let accountUserNames = [];
@@ -170,7 +170,7 @@ const updatePlayer = require('../../models/playerUpdate');
         }};
         
 
-        var updatedPlayer = updatePlayer({
+        const storePlayer = storePlayerData({
           username: data.username,
           overAllRank: data.overallRank,
           totalLevel: data.totalLevel,
@@ -201,7 +201,7 @@ const updatePlayer = require('../../models/playerUpdate');
           
 
       })
-      updatedPlayer.save()
+      storePlayer.save()
           .then(player => {
             //   console.log(player + " saved to database");
               

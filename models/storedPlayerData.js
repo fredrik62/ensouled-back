@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
 
-const updateplayerSchema = new Schema({
+const storedPlayerSchema = new Schema({
 
 
 username:({type: String}), 
@@ -135,6 +135,6 @@ Construction: {
 });
 
 
-const updatePlayer = mongoose.model("updatePlayer", updateplayerSchema);
+const storedPlayer = mongoose.model("storedPlayer", storedPlayerSchema);
 
-module.exports = updatePlayer;
+module.exports = storedPlayer;

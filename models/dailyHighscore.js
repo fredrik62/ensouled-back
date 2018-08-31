@@ -18,6 +18,6 @@ updated: { type: Date, default: Date.now },
 });
 
 
-const Update = mongoose.model("Update", xpSchema);
+const DailyHighscore = mongoose.model("DailyHighscore", xpSchema);
 
-module.exports = Update;
+module.exports = DailyHighscore;

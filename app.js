@@ -91,19 +91,19 @@ const hcimDeaths = require('./schedule-jobs/hcim-deaths');
 
 //highscore updates begin here
 
-const playerHighscore = require('./schedule-jobs/highscore-updates/general-player-update');
-const playerXpUpdateCalculation = require('./schedule-jobs/highscore-updates/xp-update');
+const playerHighscore = require('./schedule-jobs/highscore-updates/main-player-updater');
+const playerXpUpdateCalculation = require('./schedule-jobs/highscore-updates/twentyFourHourHighscore');
 
 cron.schedule('*/1 * * * *', function(){
   // hcimDeaths.getTweets();
-  playerHighscore.updatePlayers();
+  playerHighscore.storePlayerData();
   // playerXpUpdateCalculation.calculateXpGains();
   console.log('running a task every minute');
 });
 
 cron.schedule('*/2 * * * *', function(){
   // hcimDeaths.getTweets();
-  // playerHighscore.updatePlayers();
+  // playerHighscore.storePlayerData();
    playerXpUpdateCalculation.calculateXpGains();
   console.log('running a task every 2 minutes');
 });

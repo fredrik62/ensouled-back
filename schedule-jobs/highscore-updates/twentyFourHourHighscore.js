@@ -1,10 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-const PlayerData = require('../../models/playerUpdate');
 const Player = require('../../models/player');
+const StoredPlayerData = require('../../models/storedPlayerData');
 
-const Xp = require('../../models/xpUpdate');
+const DailyHighscore = require('../../models/dailyHighscore');
+
+const moment = require('moment');
+const startOfDay = moment().startOf('day').toISOString();
+const endOfDay = moment().endOf('day').toISOString();
 
 
 
@@ -15,13 +19,13 @@ module.exports = {
       for (let i = 0; i < playerUsername.length; i++) {
         let user = playerUsername[i].username;
 
-        PlayerData.find({ 'username': user})
+        StoredPlayerData.find({ 'username': user, "updated": {$gte: (startOfDay), $lt: (endOfDay)}})
         .then((data) => {
           
           if (data.length === 0) {
            console.log("no data on that player yet");
           } else {
-       Xp.remove({'username': user})
+       DailyHighscore.remove({'username': user})
        .then(() => {
          console.log("user deleted to avoid filling db with same info")
       
@@ -266,7 +270,7 @@ module.exports = {
               }]};
            
 
-            const newXp = Xp({
+            const newXp = DailyHighscore({
               username: playerXpGain.username,
               mode: playerXpGain.mode,
               totalExperience: playerXpGain.totalExperience,

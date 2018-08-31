@@ -3,6 +3,7 @@ const router = express.Router();
 
 //db collection
 const Player = require('../../models/player');
+const DailyHighscore = require('../../models/dailyHighscore');
 
 router.get('/', (req, res) => {
 Player.find({mode: 'Ultimate'} , function (err,users ) {

@@ -4,22 +4,15 @@
 const express = require('express');
 const router = express.Router();
 
-//db collection
-const Player = require('../../models/player');
-
-var moment = require('moment');
-var startOfDay = moment().startOf('day').format();
-var endOfDay = moment().endOf('day').format();
 
 //updated accounts in here
-const PlayerData = require('../../models/playerUpdate');
+const dailyHighscore = require('../../models/dailyHighscore');
+
 
 router.get('/', (req, res) => {
-PlayerData.find({mode: 'Hardcore'}, {"updated": {$gte: (startOfDay), $lt: (endOfDay)}} , function (err,users ) {
-  res.status(200).json(users);
- 
- 
-})
+dailyHighscore.find({mode: 'Hardcore'} , function (err,users ) {
+res.status(200).json(users);
+ })
   .catch((error) => {
     res.json(error);
 })
