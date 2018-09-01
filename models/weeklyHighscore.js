@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
 
-const DailyHighscoreSchema = new Schema({
+const WeeklyHighscoreSchema = new Schema({
 username:({type: String}), 
 overAllRank: ({type: Number}),
 mode: {
@@ -18,6 +18,6 @@ updated: { type: Date, default: Date.now },
 });
 
 
-const DailyHighscore = mongoose.model("DailyHighscore", DailyHighscoreSchema);
+const WeeklyHighscore = mongoose.model("WeeklyHighscore", WeeklyHighscoreSchema);
 
-module.exports = DailyHighscore;
+module.exports = WeeklyHighscore;

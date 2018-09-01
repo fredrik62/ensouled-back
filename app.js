@@ -22,6 +22,7 @@ const trackUltimateIronmanPlayer = require('./routes/player-tracking/track-ultim
 //THIS DISPLAYS ALL PLAYERS IN DATABASE
 const displayAllRegularPlayers = require('./routes/display-tracked-players/display-regular-players');
 const displayAllIronmanPlayers = require('./routes/display-tracked-players/display-ironman-players');
+const displayAllIronmanPlayersWeekly = require('./routes/display-tracked-players/display-ironman-players-weekly');
 const displayAllHardcoreIronmanPlayers = require('./routes/display-tracked-players/display-hardcore-ironman-players');
 const displayAllUltimateIronmanPlayers = require('./routes/display-tracked-players/display-ultimate-ironman-players');
 
@@ -69,6 +70,7 @@ app.use('/trackultimate', trackUltimateIronmanPlayer);
 //displaying different account modes
 app.use('/display-all-players', displayAllRegularPlayers);
 app.use('/display-all-ironman-players',displayAllIronmanPlayers);
+app.use('/display-all-ironman-players-weekly',displayAllIronmanPlayersWeekly);
 app.use('/display-all-hardcore-ironman-players',displayAllHardcoreIronmanPlayers);
 app.use('/display-all-ultimate-ironman-players',displayAllUltimateIronmanPlayers);
 
@@ -91,20 +93,22 @@ const hcimDeaths = require('./schedule-jobs/hcim-deaths');
 
 //highscore updates begin here
 
-const playerHighscore = require('./schedule-jobs/highscore-updates/main-player-updater');
-const playerXpUpdateCalculation = require('./schedule-jobs/highscore-updates/twentyFourHourHighscore');
+const mainPlayerUpdater = require('./schedule-jobs/highscore-updates/main-player-updater');
+const dailyHighscore = require('./schedule-jobs/highscore-updates/twentyFourHourHighscore');
+const weeklyHighscore = require('./schedule-jobs/highscore-updates/weeklyHighscore');
 
 cron.schedule('*/1 * * * *', function(){
   // hcimDeaths.getTweets();
-  playerHighscore.storePlayerData();
-  // playerXpUpdateCalculation.calculateXpGains();
+  mainPlayerUpdater.storePlayerData();
+  // dailyHighscore.calculateXpGains();
   console.log('running a task every minute');
 });
 
 cron.schedule('*/2 * * * *', function(){
   // hcimDeaths.getTweets();
-  // playerHighscore.storePlayerData();
-   playerXpUpdateCalculation.calculateXpGains();
+  // mainPlayerUpdater.storePlayerData();
+  //  dailyHighscore.calculateXpGains();
+  weeklyHighscore.calculateXpGains();
   console.log('running a task every 2 minutes');
 });
 
