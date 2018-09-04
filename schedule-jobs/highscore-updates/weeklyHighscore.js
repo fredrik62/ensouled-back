@@ -278,6 +278,7 @@ module.exports = {
               username: playerXpGain.username,
               mode: playerXpGain.mode,
               totalExperience: playerXpGain.totalExperience,
+              totalLevel: playerXpGain.totalLevel,
               overAllRank: playerXpGain.overAllRank,
               Skills: playerXpGain.Skills
              })
