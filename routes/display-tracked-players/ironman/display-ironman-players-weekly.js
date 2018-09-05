@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 //db collection
-const WeeklyHighscore = require('../../models/weeklyHighscore');
+const WeeklyHighscore = require('../../../models/weeklyHighscore');
 
 router.get('/', (req, res) => {
 WeeklyHighscore.find({mode: 'Ironman'} , function (err,users ) {

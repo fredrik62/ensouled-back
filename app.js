@@ -20,9 +20,16 @@ const trackIronmanPlayer = require('./routes/player-tracking/track-ironman-playe
 const trackHardcoreIronmanPlayer = require('./routes/player-tracking/track-hardcore-ironman-player');
 const trackUltimateIronmanPlayer = require('./routes/player-tracking/track-ultimate-ironman-player');
 //THIS DISPLAYS ALL PLAYERS IN DATABASE
+
+//normies
 const displayAllRegularPlayers = require('./routes/display-tracked-players/display-regular-players');
-const displayAllIronmanPlayers = require('./routes/display-tracked-players/display-ironman-players');
-const displayAllIronmanPlayersWeekly = require('./routes/display-tracked-players/display-ironman-players-weekly');
+
+//ironman
+const displayAllIronmanPlayersDaily = require('./routes/display-tracked-players/ironman/display-ironman-players-daily');
+const displayAllIronmanPlayersWeekly = require('./routes/display-tracked-players/ironman/display-ironman-players-weekly');
+const displayAllIronmanPlayersMonthly = require('./routes/display-tracked-players/ironman/display-ironman-players-monthly');
+
+
 const displayAllHardcoreIronmanPlayers = require('./routes/display-tracked-players/display-hardcore-ironman-players');
 const displayAllUltimateIronmanPlayers = require('./routes/display-tracked-players/display-ultimate-ironman-players');
 
@@ -68,10 +75,19 @@ app.use('/trackhardcore', trackHardcoreIronmanPlayer);
 app.use('/trackultimate', trackUltimateIronmanPlayer);
 
 //displaying different account modes
+
+//normie
 app.use('/display-all-players', displayAllRegularPlayers);
-app.use('/display-all-ironman-players',displayAllIronmanPlayers);
+
+//ironman
+app.use('/display-all-ironman-players',displayAllIronmanPlayersDaily);
 app.use('/display-all-ironman-players-weekly',displayAllIronmanPlayersWeekly);
+app.use('/display-all-ironman-players-monthly',displayAllIronmanPlayersMonthly);
+
+//hcim
 app.use('/display-all-hardcore-ironman-players',displayAllHardcoreIronmanPlayers);
+
+//uim
 app.use('/display-all-ultimate-ironman-players',displayAllUltimateIronmanPlayers);
 
 
@@ -91,11 +107,14 @@ cron.schedule("0 0 */2 * * *", function() {
 const hcimDeaths = require('./schedule-jobs/hcim-deaths');
 
 
-//highscore updates begin here
+//updates begin here
 
+//mainPlayerUpdater is what is making the axios request to runescape and gets the data
+//the daily, weekly and monthly are db collections with the corresponding data
 const mainPlayerUpdater = require('./schedule-jobs/highscore-updates/main-player-updater');
 const dailyHighscore = require('./schedule-jobs/highscore-updates/twentyFourHourHighscore');
 const weeklyHighscore = require('./schedule-jobs/highscore-updates/weeklyHighscore');
+const monthlyHighscore = require('./schedule-jobs/highscore-updates/monthlyHighscore');
 
 cron.schedule('*/1 * * * *', function(){
   // hcimDeaths.getTweets();
@@ -108,6 +127,7 @@ cron.schedule('*/2 * * * *', function(){
   // hcimDeaths.getTweets();
   // mainPlayerUpdater.storePlayerData();
   //  dailyHighscore.calculateXpGains();
+  monthlyHighscore.calculateXpGains();
   weeklyHighscore.calculateXpGains();
   console.log('running a task every 2 minutes');
 });

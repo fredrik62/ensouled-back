@@ -4,11 +4,14 @@ const router = express.Router();
 const Player = require('../../models/player');
 const StoredPlayerData = require('../../models/storedPlayerData');
 
-const WeeklyHighscore = require('../../models/weeklyHighscore');
+const MonthlyHighscore = require('../../models/monthlyHighscore');
 
 const moment = require('moment');
-const startOfWeek = moment().startOf('week').toISOString();
-const endOfWeek = moment().endOf('week').toISOString();
+const startOfMonth = moment().startOf('month').toISOString();
+const endOfMonth = moment().endOf('month').toISOString();
+
+console.log(startOfMonth);
+console.log(endOfMonth);
 
 
 
@@ -19,15 +22,15 @@ module.exports = {
       for (let i = 0; i < playerUsername.length; i++) {
         let user = playerUsername[i].username;
 
-        StoredPlayerData.find({ 'username': user, "updated": {$gte: (startOfWeek), $lt: (endOfWeek)}})
+        StoredPlayerData.find({ 'username': user, "updated": {$gte: (startOfMonth), $lt: (endOfMonth)}})
         .then((data) => {
           
           if (data.length === 0) {
            console.log("no data on that player yet");
           } else {
-       WeeklyHighscore.remove({'username': user})
-       .then(() => {
-         console.log("user deleted to avoid filling db with same info")
+          MonthlyHighscore.remove({'username': user})
+          .then(() => {
+           console.log("user deleted to avoid filling db with same info")
       
             //helpers
             const dFirst = data[0];
@@ -270,7 +273,7 @@ module.exports = {
               }]};
            
 
-            const weeklyHighscoreData = WeeklyHighscore({
+            const monthlyHighscoreData = MonthlyHighscore({
               username: playerXpGain.username,
               mode: playerXpGain.mode,
               totalExperience: playerXpGain.totalExperience,
@@ -279,7 +282,7 @@ module.exports = {
               Skills: playerXpGain.Skills
              })
 
-            weeklyHighscoreData.save()
+            monthlyHighscoreData.save()
               .then(player => {
                   console.log(player + " saved to database");
                  
