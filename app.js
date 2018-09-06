@@ -28,6 +28,7 @@ const displayAllRegularPlayers = require('./routes/display-tracked-players/displ
 const displayAllIronmanPlayersDaily = require('./routes/display-tracked-players/ironman/display-ironman-players-daily');
 const displayAllIronmanPlayersWeekly = require('./routes/display-tracked-players/ironman/display-ironman-players-weekly');
 const displayAllIronmanPlayersMonthly = require('./routes/display-tracked-players/ironman/display-ironman-players-monthly');
+const displayAllTopIronmanPlayers = require('./routes/display-tracked-players/ironman/display-ironman-players-top');
 
 
 const displayAllHardcoreIronmanPlayers = require('./routes/display-tracked-players/display-hardcore-ironman-players');
@@ -83,6 +84,7 @@ app.use('/display-all-players', displayAllRegularPlayers);
 app.use('/display-all-ironman-players',displayAllIronmanPlayersDaily);
 app.use('/display-all-ironman-players-weekly',displayAllIronmanPlayersWeekly);
 app.use('/display-all-ironman-players-monthly',displayAllIronmanPlayersMonthly);
+app.use('/display-all-top-ironman-players',displayAllTopIronmanPlayers);
 
 //hcim
 app.use('/display-all-hardcore-ironman-players',displayAllHardcoreIronmanPlayers);
@@ -117,8 +119,8 @@ const weeklyHighscore = require('./schedule-jobs/highscore-updates/weeklyHighsco
 const monthlyHighscore = require('./schedule-jobs/highscore-updates/monthlyHighscore');
 
 cron.schedule('*/1 * * * *', function(){
-  // hcimDeaths.getTweets();
-  mainPlayerUpdater.storePlayerData();
+  // // hcimDeaths.getTweets();
+  // mainPlayerUpdater.storePlayerData();
   // dailyHighscore.calculateXpGains();
   console.log('running a task every minute');
 });
@@ -127,9 +129,9 @@ cron.schedule('*/2 * * * *', function(){
   // hcimDeaths.getTweets();
   // mainPlayerUpdater.storePlayerData();
   //  dailyHighscore.calculateXpGains();
-  monthlyHighscore.calculateXpGains();
-  weeklyHighscore.calculateXpGains();
-  console.log('running a task every 2 minutes');
+  // monthlyHighscore.calculateXpGains();
+  // weeklyHighscore.calculateXpGains();
+  // console.log('running a task every 2 minutes');
 });
 
 //random stat lookups

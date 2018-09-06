@@ -10,8 +10,6 @@ const moment = require('moment');
 const startOfMonth = moment().startOf('month').toISOString();
 const endOfMonth = moment().endOf('month').toISOString();
 
-console.log(startOfMonth);
-console.log(endOfMonth);
 
 
 
