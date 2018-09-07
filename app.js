@@ -14,15 +14,20 @@ const Twit = require('twit');
 //require('dotenv').config();
 const geAPI = require('./routes/price');
 const getItemId = require('./routes/item');
+
+
 //all different player modes
 const trackRegularPlayer = require('./routes/player-tracking/track-regular-player');
 const trackIronmanPlayer = require('./routes/player-tracking/track-ironman-player');
 const trackHardcoreIronmanPlayer = require('./routes/player-tracking/track-hardcore-ironman-player');
 const trackUltimateIronmanPlayer = require('./routes/player-tracking/track-ultimate-ironman-player');
-//THIS DISPLAYS ALL PLAYERS IN DATABASE
+
 
 //normies
-const displayAllRegularPlayers = require('./routes/display-tracked-players/display-regular-players');
+const displayAllRegularPlayersDaily = require('./routes/display-tracked-players/regular/display-regular-players-daily');
+const displayAllRegularPlayersWeekly = require('./routes/display-tracked-players/regular/display-regular-players-weekly');
+const displayAllRegularPlayersMonthly = require('./routes/display-tracked-players/regular/display-regular-players-monthly');
+
 
 //ironman
 const displayAllIronmanPlayersDaily = require('./routes/display-tracked-players/ironman/display-ironman-players-daily');
@@ -30,9 +35,16 @@ const displayAllIronmanPlayersWeekly = require('./routes/display-tracked-players
 const displayAllIronmanPlayersMonthly = require('./routes/display-tracked-players/ironman/display-ironman-players-monthly');
 const displayAllTopIronmanPlayers = require('./routes/display-tracked-players/ironman/display-ironman-players-top');
 
+//hardcore ironman
+const displayAllHardcoreIronmanPlayersDaily = require('./routes/display-tracked-players/hardcore/display-hardcore-ironman-players-daily');
+const displayAllHardcoreIronmanPlayersWeekly = require('./routes/display-tracked-players/hardcore/display-hardcore-ironman-players-weekly');
+const displayAllHardcoreIronmanPlayersMonthly = require('./routes/display-tracked-players/hardcore/display-hardcore-ironman-players-monthly');
 
-const displayAllHardcoreIronmanPlayers = require('./routes/display-tracked-players/display-hardcore-ironman-players');
-const displayAllUltimateIronmanPlayers = require('./routes/display-tracked-players/display-ultimate-ironman-players');
+//ultimate ironman
+const displayAllUltimateIronmanPlayersDaily = require('./routes/display-tracked-players/ultimate/display-ultimate-ironman-players-daily');
+const displayAllUltimateIronmanPlayersWeekly = require('./routes/display-tracked-players/ultimate/display-ultimate-ironman-players-weekly');
+const displayAllUltimateIronmanPlayersMonthly = require('./routes/display-tracked-players/ultimate/display-ultimate-ironman-players-monthly');
+
 
 const playerLookUp = require('./routes/playerLookUp');
 const getSkill = require('./routes/getOneSkill');
@@ -78,7 +90,9 @@ app.use('/trackultimate', trackUltimateIronmanPlayer);
 //displaying different account modes
 
 //normie
-app.use('/display-all-players', displayAllRegularPlayers);
+app.use('/display-all-players', displayAllRegularPlayersDaily);
+app.use('/display-all-players-weekly', displayAllRegularPlayersWeekly);
+app.use('/display-all-players-monthly', displayAllRegularPlayersMonthly);
 
 //ironman
 app.use('/display-all-ironman-players',displayAllIronmanPlayersDaily);
@@ -87,10 +101,14 @@ app.use('/display-all-ironman-players-monthly',displayAllIronmanPlayersMonthly);
 app.use('/display-all-top-ironman-players',displayAllTopIronmanPlayers);
 
 //hcim
-app.use('/display-all-hardcore-ironman-players',displayAllHardcoreIronmanPlayers);
+app.use('/display-all-hardcore-ironman-players',displayAllHardcoreIronmanPlayersDaily);
+app.use('/display-all-hardcore-ironman-players-weekly',displayAllHardcoreIronmanPlayersWeekly);
+app.use('/display-all-hardcore-ironman-players-monthly',displayAllHardcoreIronmanPlayersMonthly);
 
 //uim
-app.use('/display-all-ultimate-ironman-players',displayAllUltimateIronmanPlayers);
+app.use('/display-all-ultimate-ironman-players',displayAllUltimateIronmanPlayersDaily);
+app.use('/display-all-ultimate-ironman-players-weekly',displayAllUltimateIronmanPlayersWeekly);
+app.use('/display-all-ultimate-ironman-players-monthly',displayAllUltimateIronmanPlayersMonthly);
 
 
 //display twitter feed in front end
@@ -120,18 +138,18 @@ const monthlyHighscore = require('./schedule-jobs/highscore-updates/monthlyHighs
 
 cron.schedule('*/1 * * * *', function(){
   // hcimDeaths.getTweets();
-  //  mainPlayerUpdater.storePlayerData();
+    mainPlayerUpdater.storePlayerData();
   // dailyHighscore.calculateXpGains();
   console.log('running a task every minute');
 });
 
-cron.schedule('*/2 * * * *', function(){
+cron.schedule('*/3 * * * *', function(){
   // hcimDeaths.getTweets();
   // mainPlayerUpdater.storePlayerData();
-  //  dailyHighscore.calculateXpGains();
-  // monthlyHighscore.calculateXpGains();
-  // weeklyHighscore.calculateXpGains();
-  // console.log('running a task every 2 minutes');
+    // dailyHighscore.calculateXpGains();
+    // monthlyHighscore.calculateXpGains();
+    // weeklyHighscore.calculateXpGains();
+    console.log('running a task every 3 minutes');
 });
 
 //random stat lookups

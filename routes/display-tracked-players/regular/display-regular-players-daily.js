@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-//db collection
-const Player = require('../../models/player');
-const DailyHighscore = require('../../models/dailyHighscore');
+
+const DailyHighscore = require('../../../models/dailyHighscore');
 
 
 router.get('/', (req, res) => {
-Player.find({mode: 'Regular'}, function (err,users ) {
+DailyHighscore.find({mode: 'Regular'}, function (err,users ) {
   res.status(200).json(users);
 })
   .catch((error) => {

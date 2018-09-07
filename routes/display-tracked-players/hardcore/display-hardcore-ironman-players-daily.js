@@ -6,11 +6,10 @@ const router = express.Router();
 
 
 //updated accounts in here
-const dailyHighscore = require('../../models/dailyHighscore');
-
+const DailyHighscore = require('../../../models/dailyHighscore');
 
 router.get('/', (req, res) => {
-dailyHighscore.find({mode: 'Hardcore'} , function (err,users ) {
+DailyHighscore.find({mode: 'Hardcore'} , function (err,users ) {
 res.status(200).json(users);
  })
   .catch((error) => {
