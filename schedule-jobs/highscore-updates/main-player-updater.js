@@ -21,6 +21,7 @@ const storePlayerData = require('../../models/storedPlayerData');
       accountUserNames.push(playerAccount[i].username);
       osrs.hiscores.getPlayer(accountUserNames[i])
       .then((playerData) => {
+          console.log(playerData);
   
         let data = {
           username: accountUserNames[i],
@@ -206,10 +207,14 @@ const storePlayerData = require('../../models/storedPlayerData');
             //   console.log(player + " saved to database");
               
           })
-          .catch((error) => {
-            console.log(error);
-          })
-      })
+        })
+        .catch((error) => {
+            if (error) {
+                if (error.statusCode === 404) {
+                  console.log('player cannot be found');
+                }
+               }
+        })
       }
 
       })
