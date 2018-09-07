@@ -32,12 +32,12 @@ const options = { screen_name: 'HCIM_Deaths',
          console.log("shit is no good so you don't want this");
         } else {
           
-          var playerNameFromTweet = tweetData.substring(0,  startOfhasDied);
-         console.log(playerNameFromTweet);
-          var playerStatsDeathMoment = data[0].entities.media[0].media_url_https;
-          var twitterPostId  = data[0].entities.media[0].id;
-          var hcim = "Hardcore";
-          var source = data[0].entities.media[0].url;
+          const playerNameFromTweet = tweetData.substring(0,  startOfhasDied);
+          console.log(playerNameFromTweet);
+          const playerStatsDeathMoment = data[0].entities.media[0].media_url_https;
+          const twitterPostId  = data[0].entities.media[0].id;
+          const hcim = "Hardcore";
+          const source = data[0].entities.media[0].url;
         
         
         osrs.hiscores.getPlayer(playerNameFromTweet, hcim)
@@ -75,22 +75,20 @@ const options = { screen_name: 'HCIM_Deaths',
 
                })
 
-               .catch((error) => {
-                 if (error) {
-                   if (error.statusCode === 404) {
-                     return res.status(404).json({
-                       code: 'player cannot be found'
-                     });
-                   }
-                 }
-               })
-           } //else statement ends here
-         })
-     }
-
-   })
-  } //needs to end here
-
- })
+              } //else statement ends here
+            })
+          }
+          
+        })
+        .catch((error) => {
+          if (error) {
+            if (error.statusCode === 404) {
+              console.log("player from the tweet can't be found, has most likely changed their username");
+            }
+          }
+        })
+      } //needs to end here
+      
+    })
  }
  }

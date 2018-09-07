@@ -119,8 +119,8 @@ const weeklyHighscore = require('./schedule-jobs/highscore-updates/weeklyHighsco
 const monthlyHighscore = require('./schedule-jobs/highscore-updates/monthlyHighscore');
 
 cron.schedule('*/1 * * * *', function(){
-  // // hcimDeaths.getTweets();
-   mainPlayerUpdater.storePlayerData();
+  // hcimDeaths.getTweets();
+  //  mainPlayerUpdater.storePlayerData();
   // dailyHighscore.calculateXpGains();
   console.log('running a task every minute');
 });
