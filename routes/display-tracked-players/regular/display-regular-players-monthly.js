@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 
 
-const DailyHighscore = require('../../../models/dailyHighscore');
+const MonthyHighscore = require('../../../models/monthlyHighscore');
 
 
 router.get('/', (req, res) => {
-DailyHighscore.find({mode: 'Regular'}, function (err,users ) {
+MonthyHighscore.find({mode: 'Regular'}, function (err,users ) {
   res.status(200).json(users);
 })
   .catch((error) => {

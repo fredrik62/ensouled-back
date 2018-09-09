@@ -5,11 +5,10 @@ const express = require('express');
 const router = express.Router();
 
 
-//updated accounts in here
-const DailyHighscore = require('../../../models/dailyHighscore');
+const WeeklyHighscore = require('../../../models/weeklyHighscore');
 
 router.get('/', (req, res) => {
-DailyHighscore.find({mode: 'Ultimate'} , function (err,users ) {
+WeeklyHighscore.find({mode: 'Ultimate'} , function (err,users ) {
 res.status(200).json(users);
  })
   .catch((error) => {

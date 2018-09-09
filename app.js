@@ -33,7 +33,7 @@ const displayAllRegularPlayersMonthly = require('./routes/display-tracked-player
 const displayAllIronmanPlayersDaily = require('./routes/display-tracked-players/ironman/display-ironman-players-daily');
 const displayAllIronmanPlayersWeekly = require('./routes/display-tracked-players/ironman/display-ironman-players-weekly');
 const displayAllIronmanPlayersMonthly = require('./routes/display-tracked-players/ironman/display-ironman-players-monthly');
-const displayAllTopIronmanPlayers = require('./routes/display-tracked-players/ironman/display-ironman-players-top');
+
 
 //hardcore ironman
 const displayAllHardcoreIronmanPlayersDaily = require('./routes/display-tracked-players/hardcore/display-hardcore-ironman-players-daily');
@@ -90,15 +90,15 @@ app.use('/trackultimate', trackUltimateIronmanPlayer);
 //displaying different account modes
 
 //normie
-app.use('/display-all-players', displayAllRegularPlayersDaily);
-app.use('/display-all-players-weekly', displayAllRegularPlayersWeekly);
-app.use('/display-all-players-monthly', displayAllRegularPlayersMonthly);
+app.use('/display-all-regular-players', displayAllRegularPlayersDaily);
+app.use('/display-all-regular-players-weekly', displayAllRegularPlayersWeekly);
+app.use('/display-all-regular-players-monthly', displayAllRegularPlayersMonthly);
 
 //ironman
 app.use('/display-all-ironman-players',displayAllIronmanPlayersDaily);
 app.use('/display-all-ironman-players-weekly',displayAllIronmanPlayersWeekly);
 app.use('/display-all-ironman-players-monthly',displayAllIronmanPlayersMonthly);
-app.use('/display-all-top-ironman-players',displayAllTopIronmanPlayers);
+
 
 //hcim
 app.use('/display-all-hardcore-ironman-players',displayAllHardcoreIronmanPlayersDaily);
@@ -138,17 +138,17 @@ const monthlyHighscore = require('./schedule-jobs/highscore-updates/monthlyHighs
 
 cron.schedule('*/1 * * * *', function(){
   // hcimDeaths.getTweets();
-    mainPlayerUpdater.storePlayerData();
+  //  mainPlayerUpdater.storePlayerData();
   // dailyHighscore.calculateXpGains();
   console.log('running a task every minute');
 });
 
-cron.schedule('*/3 * * * *', function(){
+cron.schedule('*/2 * * * *', function(){
   // hcimDeaths.getTweets();
   // mainPlayerUpdater.storePlayerData();
-    // dailyHighscore.calculateXpGains();
-    // monthlyHighscore.calculateXpGains();
-    // weeklyHighscore.calculateXpGains();
+  //  dailyHighscore.calculateXpGains();
+  //  monthlyHighscore.calculateXpGains();
+  //  weeklyHighscore.calculateXpGains();
     console.log('running a task every 3 minutes');
 });
 

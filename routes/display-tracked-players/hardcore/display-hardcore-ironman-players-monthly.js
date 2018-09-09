@@ -2,15 +2,15 @@ const express = require('express');
 const router = express.Router();
 
 //db collection
-const DailyHighscore = require('../../../models/dailyHighscore');
+const MonthlyHighscore = require('../../../models/monthlyHighscore');
 
 router.get('/', (req, res) => {
-DailyHighscore.find({mode: 'Ironman'} , function (err,users ) {
-res.status(200).json(users);
-})
-  .catch((error) => {
-    res.json(error);
-})
-});
+  MonthlyHighscore.find({mode: 'Hardcore'} , function (err,users ) {
+  res.status(200).json(users);
+   })
+    .catch((error) => {
+      res.json(error);
+  })
+  });
 
 module.exports = router;
