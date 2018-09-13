@@ -8,7 +8,7 @@ const graph_URL = 'http://services.runescape.com/m=itemdb_oldschool/api/graph/';
 
 
 router.get('/:id', (req, res) => {
-  linkId = req.params.id;
+  const linkId = req.params.id;
   const symbols = /^[a-zA-Z0-9_ ]*$/;
   const hasSymbol = symbols.test(linkId);
 

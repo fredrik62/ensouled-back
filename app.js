@@ -46,6 +46,12 @@ const displayAllUltimateIronmanPlayersWeekly = require('./routes/display-tracked
 const displayAllUltimateIronmanPlayersMonthly = require('./routes/display-tracked-players/ultimate/display-ultimate-ironman-players-monthly');
 
 
+//display category/:player
+
+const displayOnePlayerDaily = require('./routes/display-tracked-players/display-one-tracked-player/display-daily');
+const displayOnePlayerWeekly = require('./routes/display-tracked-players/display-one-tracked-player/display-weekly');
+const displayOnePlayerMonthly = require('./routes/display-tracked-players/display-one-tracked-player/display-monthly');
+
 const playerLookUp = require('./routes/playerLookUp');
 const getSkill = require('./routes/getOneSkill');
 
@@ -109,6 +115,13 @@ app.use('/display-all-hardcore-ironman-players-monthly',displayAllHardcoreIronma
 app.use('/display-all-ultimate-ironman-players',displayAllUltimateIronmanPlayersDaily);
 app.use('/display-all-ultimate-ironman-players-weekly',displayAllUltimateIronmanPlayersWeekly);
 app.use('/display-all-ultimate-ironman-players-monthly',displayAllUltimateIronmanPlayersMonthly);
+
+//displaying hs categories/:player
+
+app.use('/display-one-player-daily',displayOnePlayerDaily);
+app.use('/display-one-player-weekly',displayOnePlayerWeekly);
+app.use('/display-one-player-monthly',displayOnePlayerMonthly);
+
 
 
 //display twitter feed in front end
