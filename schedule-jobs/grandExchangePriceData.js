@@ -11,6 +11,7 @@ module.exports = {
       .then(function (response) {
         console.log("running a task every minute");
         const priceData = response.data;
+        console.log(response);
         const allItemData = [];
         Item.remove({})
         .then(() => {

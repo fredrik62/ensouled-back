@@ -12,8 +12,9 @@ const Twit = require('twit');
 
 
 //require('dotenv').config();
-const geAPI = require('./routes/price');
-const getItemId = require('./routes/item');
+const displayAllGrandExchangeItems = require('./routes/display-grandExchange-item/display-all-item-prices');
+const displayClickedItem = require('./routes/display-grandExchange-item/display-one-item');
+const displayClickedItemChart = require('./routes/display-grandExchange-item/display-one-item-chart');
 
 
 //all different player modes
@@ -52,8 +53,8 @@ const displayOnePlayerDaily = require('./routes/display-tracked-players/display-
 const displayOnePlayerWeekly = require('./routes/display-tracked-players/display-one-tracked-player/display-weekly');
 const displayOnePlayerMonthly = require('./routes/display-tracked-players/display-one-tracked-player/display-monthly');
 
-const playerLookUp = require('./routes/playerLookUp');
-const getSkill = require('./routes/getOneSkill');
+const getXpChart = require('./routes/display-tracked-players/display-one-player-xp-chart/all-time-xp-gained');
+const getSkill = require('./routes/get-skill-for-player-calculators/getOneSkill');
 
 //twitter feed hcim deaths
 const hcimDeathLookUp = require('./routes/display-twitter-feed/three-tweets');
@@ -84,8 +85,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 //grandexchange price data
-app.use('/', geAPI);
-app.use('/item', getItemId);
+app.use('/', displayAllGrandExchangeItems);
+app.use('/item', displayClickedItem);
+app.use('/item-chart', displayClickedItemChart);
 
 //track different account modes
 app.use('/trackregular', trackRegularPlayer);
@@ -122,6 +124,9 @@ app.use('/display-one-player-daily',displayOnePlayerDaily);
 app.use('/display-one-player-weekly',displayOnePlayerWeekly);
 app.use('/display-one-player-monthly',displayOnePlayerMonthly);
 
+//xp chart one player
+app.use('/experience-chart', getXpChart);
+
 
 
 //display twitter feed in front end
@@ -149,7 +154,10 @@ const dailyHighscore = require('./schedule-jobs/highscore-updates/twentyFourHour
 const weeklyHighscore = require('./schedule-jobs/highscore-updates/weeklyHighscore');
 const monthlyHighscore = require('./schedule-jobs/highscore-updates/monthlyHighscore');
 
+
+
 cron.schedule('*/1 * * * *', function(){
+  // data.getMeData();
   // hcimDeaths.getTweets();
   //  mainPlayerUpdater.storePlayerData();
   // dailyHighscore.calculateXpGains();
@@ -166,7 +174,6 @@ cron.schedule('*/2 * * * *', function(){
 });
 
 //random stat lookups
-app.use('/lookup', playerLookUp);
 app.use('/getskill', getSkill);
 
 // catch 404 and forward to error handler

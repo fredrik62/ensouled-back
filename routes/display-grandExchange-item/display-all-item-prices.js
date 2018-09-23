@@ -1,7 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const router = express.Router();
-const Item = require('../models/grandExchangeData');
+const Item = require('../../models/grandExchangeData');
 
 
 router.get('/', (req, res) => {
@@ -21,10 +21,3 @@ router.get('/', (req, res) => {
 
 module.exports = router;
 
-// axios.get(geAPI)
-// .then((response) => {
-//  res.status(200).json(response.data);
-//   })
-// .catch((error) => {
-//   res.json(error);
-// });
