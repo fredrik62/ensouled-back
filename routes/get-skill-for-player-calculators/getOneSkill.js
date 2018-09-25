@@ -2,7 +2,7 @@
 const express = require('express');
 const osrs = require("osrs-wrapper");
 const router = express.Router();
-const Player = require('../models/player');
+const Player = require('../../models/player');
 
 
 

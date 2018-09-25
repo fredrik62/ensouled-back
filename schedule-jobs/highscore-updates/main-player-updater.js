@@ -182,6 +182,7 @@ const storePlayerData = require('../../models/storedPlayerData');
           Strength: data.Strength,
           Hitpoints: data.Hitpoints,
           Ranged: data.Ranged,
+          Prayer: data.Prayer,
           Magic: data.Magic,
           Cooking: data.Cooking,
           Woodcutting: data.Woodcutting,

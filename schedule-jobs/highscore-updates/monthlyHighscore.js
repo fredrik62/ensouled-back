@@ -76,6 +76,11 @@ module.exports = {
             const rngLastXp = dLast.Ranged.xp;
             const rngFirstRank = dFirst.Ranged.rank;
             const rngLastRank = dLast.Ranged.rank;
+
+            const prayerFirstXp = dFirst.Prayer.xp;
+            const prayerLastXp = dLast.Prayer.xp;
+            const prayerFirstRank = dFirst.Prayer.rank;
+            const prayerLastRank = dLast.Prayer.rank;
   
             const mageFirstXp = dFirst.Magic.xp;
             const mageLastXp = dLast.Magic.xp;
@@ -198,6 +203,10 @@ module.exports = {
                "Ranged": {
                 ranged: rngLastXp - rngFirstXp,
                 rangedRank: rngFirstRank - rngLastRank
+               },
+               "Prayer": {
+                prayer: prayerLastXp - prayerFirstXp,
+                prayerRank: prayerFirstRank - prayerLastRank
                },
                "Magic": {
                 magic: mageLastXp - mageFirstXp,

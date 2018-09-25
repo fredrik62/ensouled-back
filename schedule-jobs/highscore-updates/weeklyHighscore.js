@@ -25,9 +25,9 @@ module.exports = {
           if (data.length === 0) {
            console.log("no data on that player yet");
           } else {
-       WeeklyHighscore.remove({'username': user})
-       .then(() => {
-         console.log("user deleted to avoid filling db with same info")
+          WeeklyHighscore.remove({'username': user})
+          .then(() => {
+           console.log("user deleted to avoid filling db with same info")
       
             //helpers
             const dFirst = data[0];
@@ -75,6 +75,12 @@ module.exports = {
             const rngLastXp = dLast.Ranged.xp;
             const rngFirstRank = dFirst.Ranged.rank;
             const rngLastRank = dLast.Ranged.rank;
+
+
+            const prayerFirstXp = dFirst.Prayer.xp;
+            const prayerLastXp = dLast.Prayer.xp;
+            const prayerFirstRank = dFirst.Prayer.rank;
+            const prayerLastRank = dLast.Prayer.rank;
   
             const mageFirstXp = dFirst.Magic.xp;
             const mageLastXp = dLast.Magic.xp;
@@ -197,6 +203,10 @@ module.exports = {
                "Ranged": {
                 ranged: rngLastXp - rngFirstXp,
                 rangedRank: rngFirstRank - rngLastRank
+               },
+               "Prayer": {
+                prayer: prayerLastXp - prayerFirstXp,
+                prayerRank: prayerFirstRank - prayerLastRank
                },
                "Magic": {
                 magic: mageLastXp - mageFirstXp,

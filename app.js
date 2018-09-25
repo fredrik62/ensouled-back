@@ -164,12 +164,12 @@ cron.schedule('*/1 * * * *', function(){
   console.log('running a task every minute');
 });
 
-cron.schedule('*/2 * * * *', function(){
+cron.schedule('*/1 * * * *', function(){
   // hcimDeaths.getTweets();
   // mainPlayerUpdater.storePlayerData();
-  //  dailyHighscore.calculateXpGains();
-  //  monthlyHighscore.calculateXpGains();
-  //  weeklyHighscore.calculateXpGains();
+    // dailyHighscore.calculateXpGains();
+    // monthlyHighscore.calculateXpGains();
+    // weeklyHighscore.calculateXpGains();
     console.log('running a task every 3 minutes');
 });
 
