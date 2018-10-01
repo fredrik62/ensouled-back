@@ -165,13 +165,8 @@ function PlayerSkill() {
 
 router.post('/user', (req, res) => {
     const gameMode = req.body.ironman;
-    const playerUserName = req.body.rsn;
-    const symbols = /^[a-zA-Z0-9_ ]*$/;
-    const hasSymbol = symbols.test(playerUserName);
-
-    if (hasSymbol === false || playerUserName.length === 0 || playerUserName.length > 12) {
-        return res.status(403).json({code: 'Forbidden, issue with user input'});
-    }
+    const playerUserName = req.body.rsn.toLowerCase();
+   
 
     Player.findOne({'username': playerUserName})
     .then((userExists) => {
@@ -191,7 +186,7 @@ router.post('/user', (req, res) => {
                 const account = me.returnPlayerDetails();
     
     
-                var newPlayer = Player({
+                const newPlayer = Player({
                     username: playerUserName,
                     overAllRank: account.overallRank,
                     totalLevel: account.totalLevel,
